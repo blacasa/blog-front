@@ -11,6 +11,12 @@
           <b-nav-item to="/login" v-if="false">Connexion</b-nav-item>
           <b-nav-text v-if="adminMode" v-on:click="logout">Déconnexion</b-nav-text>
         </b-navbar-nav>
+        <b-navbar-nav class="ml-auto">
+          <b-nav-form>
+            <b-form-input v-model="searchGame" @keyup.enter="search()" size="sm" class="mr-sm-2" placeholder="Recherche"></b-form-input>
+            <b-button size="sm" class="my-2 my-sm-0 btn-search" v-on:click="search"><b-icon icon="search" aria-hidden="true"></b-icon></b-button>
+          </b-nav-form>
+        </b-navbar-nav>
       </b-navbar>
     </div>
 </template>
@@ -22,6 +28,11 @@ export default {
   name: 'Header',
   components: {
 
+  },
+  data () {
+    return {
+      searchGame: ''
+    }
   },
   /* props: propriétés qui peuvent être envoyées par le parent */
   props: {
@@ -35,6 +46,10 @@ export default {
       if (this.$route.name !== 'Home') {
         router.push({ name: 'Home' })
       }
+    },
+    search: function () {
+      this.$emit('search', this.searchGame)
+      this.searchGame = ''
     }
   }
 }
@@ -43,6 +58,10 @@ export default {
 <style scoped>
 .bg-info {
   background-color: #6C028F !important;
+}
+.btn-search {
+  background-color: #6C028F !important;
+  border: none;
 }
 .nav-item.nav-item.nav-item a {
   color: rgb(240, 235, 235);

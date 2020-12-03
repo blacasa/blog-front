@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-if="isLoading" class="d-flex justify-content-center mb-3">
+    <div v-if="isLoading" class="d-flex justify-content-center mb-3 bla-spinner">
       <b-spinner label="Chargement..."></b-spinner>
     </div>
     <!-- Détail Article id: {{ id }} -->
@@ -78,6 +78,9 @@ export default {
 }
 </script>
 <style>
+.bla-spinner{
+  margin-top: 5%;
+}
 .card-image {
   float: left;
   margin-right: 2%;

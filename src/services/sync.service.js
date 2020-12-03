@@ -47,9 +47,13 @@ export default {
       .get(editeurURL)
       .then(response => response.data)
   },
-  getJeux () {
+  getJeux (game) {
     return axios
-      .get(jeuURL)
+      .get(jeuURL, {
+        params: {
+          game: game
+        }
+      })
       .then(response => response.data)
   },
   getPersonnalites () {

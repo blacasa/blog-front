@@ -1,8 +1,5 @@
 <template>
   <div>
-    <div v-if="isLoading" class="d-flex justify-content-center mb-3">
-      <b-spinner label="Chargement..."></b-spinner>
-    </div>
     <b-pagination
       v-if="articles.length > perPage"
       v-model="currentPage"
@@ -43,7 +40,6 @@
 
 <script>
 import Article from '@/components/Article.vue'
-import syncService from '../services/sync.service.js'
 import constants from '../globals'
 
 export default {
@@ -52,15 +48,14 @@ export default {
     Article
   },
   props: {
+    articles: Array,
     limit: Number
   },
   mounted: function () {
     this.currentPage = this.$route.params && this.$route.params.page ? this.$route.params.page : 1
-    this.fetchData()
   },
   data: function () {
     return {
-      articles: [],
       isLoading: true,
       mode: 'light',
       perPage: constants.nbArticlesParPage,
@@ -69,7 +64,6 @@ export default {
   },
   computed: {
     rows () {
-      console.log('nb articles:', this.articles.length)
       return this.articles.length
     },
     currentPageItems () {
@@ -84,16 +78,6 @@ export default {
         nbPages++
       }
       return paginatedArticles[this.currentPage - 1]
-    }
-  },
-  methods: {
-    fetchData: function () {
-      this.isLoading = true
-      // console.log('limit - fetchData', this.limit)
-      syncService.getArticles(this.limit).then(function (data) {
-        this.articles = data
-        this.isLoading = false
-      }.bind(this))
     }
   }
 }
