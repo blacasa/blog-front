@@ -2,7 +2,8 @@
   <div id="app">
     <haut
       v-bind:adminMode="adminMode"
-      v-on:update-menu="showAdmin"/>
+      v-on:update-menu="showAdmin"
+      v-on:search="search"/>
     <router-view v-on:update-menu="showAdmin"/>
     <bas />
   </div>
@@ -12,6 +13,8 @@
 import router from './router/index'
 import haut from './components/Header'
 import bas from './components/Footer'
+import syncService from './services/sync.service.js'
+import store from './store'
 
 export default {
   components: {
@@ -23,10 +26,20 @@ export default {
   },
   data () {
     return {
-      adminMode: false
+      adminMode: false,
+      jeux: []
     }
   },
   methods: {
+    search: function (search) {
+      syncService.getJeux(search).then(function (data) {
+        store.commit('setGames', data)
+        if (this.$route.name !== 'Jeux') {
+          store.commit('setFromSearch', true)
+          router.push({ name: 'Jeux' })
+        }
+      }.bind(this))
+    },
     showAdmin: function () {
       this.adminMode = typeof localStorage.getItem('user-token') !== 'undefined' &&
       localStorage.getItem('user-token') !== null

@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <div v-if="isLoading" class="d-flex justify-content-center mb-3">
+    <div v-if="isLoading" class="d-flex justify-content-center mb-3 bla-spinner">
       <b-spinner label="Chargement..."></b-spinner>
     </div>
     <!-- Liste jeux -->
@@ -41,12 +41,19 @@
 <script>
 // @ is an alias to /src
 import constants from '../globals'
-import moment from 'moment'
 import syncService from '../services/sync.service.js'
+import store from '../store'
 
 export default {
   name: 'Jeux',
   mounted: function () {
+    this.$store.subscribe((action) => {
+      if (action.type === 'setGames') {
+        // ici
+        this.jeux = store.state.games
+        this.isLoading = false
+      }
+    }).bind(this)
     this.fetchData()
   },
   data: function () {
@@ -130,17 +137,26 @@ export default {
   },
   methods: {
     fetchData: function () {
-      this.isLoading = true
-      syncService.getJeux().then(function (data) {
-        this.jeux = data
+      if (!store.state.fromSearch) {
+        this.isLoading = true
+        syncService.getJeux().then(function (data) {
+          this.jeux = data
+          this.isLoading = false
+        }.bind(this))
+      } else {
+        this.jeux = store.state.games
         this.isLoading = false
-      }.bind(this))
+      }
+      store.commit('setFromSearch', false)
     }
   }
 }
 </script>
 
 <style>
+.bla-spinner{
+  margin-top: 5%;
+}
 .border {
   border: 1px solid #6C028F !important;
 }
