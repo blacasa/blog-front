@@ -1,6 +1,7 @@
 import axios from 'axios'
 
-const backURL = 'http://127.0.0.1:8000'
+// const backURL = 'http://127.0.0.1:8000'
+const backURL = 'http://localhost:3000/api'
 const articleURL = backURL + '/article'
 const allArticleURL = articleURL + '/all'
 const editeurURL = backURL + '/editeur'
@@ -11,7 +12,6 @@ const roleURL = backURL + '/role'
 
 axios.interceptors.request.use(function (config) {
   // Do something before request is sent
-  // console.log('request interceptor', config)
   if (config.method === 'post') {
     config.headers['X-AUTH-TOKEN'] = localStorage.getItem('user-token')
   }
@@ -102,7 +102,8 @@ export default {
       loginURL,
       params
     ).then(response => {
-      const token = response.data.value
+      const token = response.data.token
+      /// const token = response.data.value
       console.log(token)
       localStorage.setItem('user-token', token)
       // setAuthToken(token)
@@ -134,7 +135,6 @@ export default {
       jeuURL,
       params
     ).then(response => {
-      console.log('then serv')
       return response.data
     }).catch(e => {
       console.log('catch error', e)

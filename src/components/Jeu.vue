@@ -32,7 +32,7 @@ export default {
     getAuteurs: function () {
       const authors = []
       this.jeu.personnalites.auteurs.forEach(perso => {
-        authors.push(perso.personnalite.nom + ' ' + perso.personnalite.prenom)
+        authors.push(perso.nom + ' ' + perso.prenom)
       })
       return 'Créé par ' + authors.join(', ')
     },
@@ -53,7 +53,7 @@ export default {
     getIllustrateurs: function () {
       const illus = []
       this.jeu.personnalites.illustrateurs.forEach(perso => {
-        illus.push(perso.personnalite.nom + ' ' + perso.personnalite.prenom)
+        illus.push(perso.nom + ' ' + perso.prenom)
       })
       return 'Illustré par ' + illus.join(', ')
     },

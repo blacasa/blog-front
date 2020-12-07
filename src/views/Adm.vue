@@ -579,9 +579,9 @@ export default {
       const selectedAuteurs = []
       if (selectedJeu.personnalites && selectedJeu.personnalites.auteurs) {
         selectedJeu.personnalites.auteurs.map(ed => {
-          console.log('aut:', ed.personnalite)
-          if (ed.personnalite.id) {
-            selectedAuteurs.push(ed.personnalite.id)
+          console.log('aut:', ed)
+          if (ed.id) {
+            selectedAuteurs.push(ed.id)
           }
         })
       }
@@ -589,8 +589,8 @@ export default {
       const selectedIllust = []
       if (selectedJeu.personnalites && selectedJeu.personnalites.illustrateurs) {
         selectedJeu.personnalites.illustrateurs.map(ed => {
-          if (ed.personnalite.id) {
-            selectedIllust.push(ed.personnalite.id)
+          if (ed.id) {
+            selectedIllust.push(ed.id)
           }
         })
       }
@@ -626,6 +626,7 @@ export default {
           datePublication: null,
           jeu: null
         }
+        this.formJeu.image = null
         this.selectedArticleId = null
       }.bind(this)).catch(function (e) {
         console.log('catch', e)
@@ -700,6 +701,7 @@ export default {
           auteurs: [],
           illustrateurs: []
         }
+        this.formArticle.image = null
       }.bind(this)).catch(function (e) {
         console.log('catch', e)
       })
