@@ -13,7 +13,8 @@ const roleURL = backURL + '/role'
 axios.interceptors.request.use(function (config) {
   // Do something before request is sent
   if (config.method === 'post') {
-    config.headers['X-AUTH-TOKEN'] = localStorage.getItem('user-token')
+    const token = localStorage.getItem('user-token')
+    config.headers.common.Authorization = `Bearer ${token}`
   }
 
   return config
