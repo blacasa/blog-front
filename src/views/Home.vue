@@ -6,7 +6,7 @@
     <!-- Liste articles -->
     <Articles :limit="this.limit" :articles="this.articles"/>
     <!-- Voir plus d'articles -->
-    <b-link :v-if="this.showNextPage" :to="{ name: 'Archives', params: { page: 2 } }">Voir plus d'article</b-link>
+    <b-link :to="{ name: 'Archives', params: { page: 2 } }">Voir plus d'article</b-link>
   </div>
 </template>
 
@@ -24,6 +24,7 @@ export default {
   data: function () {
     return {
       articles: [],
+      publishedArticles: 0,
       isLoading: false,
       limit: constants.nbArticles,
       showNextPage: false
@@ -35,11 +36,31 @@ export default {
   methods: {
     fetchData: function () {
       this.isLoading = true
-      syncService.getArticles(this.limit).then(function (data) {
-        this.articles = data
+      syncService.getReferences().then(data => {
+        this.publishedArticles = data.nbPublishedArticles
+        syncService.getArticles(this.limit).then(function (data) {
+          this.articles = data
+          this.isLoading = false
+          this.showNextPage = this.publishedArticles > this.limit
+        }.bind(this)).catch(() => {
+          this.isLoading = false
+          this.showNextPage = false
+          this.displayError()
+        })
+      }).catch(() => {
         this.isLoading = false
-        this.showNextPage = this.articles.length > this.limit
-      }.bind(this))
+        this.showNextPage = false
+        this.displayError()
+      })
+    },
+    displayError: function () {
+      this.$bvToast.toast('Le serveur n\'a pu être contacté. Merci de ré-essayer ultérieurement.', {
+        title: 'Erreur',
+        autoHideDelay: 5000,
+        solid: true,
+        toaster: 'b-toaster-top-center',
+        variant: 'danger'
+      })
     }
   }
 }

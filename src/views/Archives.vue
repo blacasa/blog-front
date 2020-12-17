@@ -33,7 +33,17 @@ export default {
       syncService.getArticles().then(function (data) {
         this.articles = data
         this.isLoading = false
-      }.bind(this))
+      }.bind(this)).catch(() => {
+        this.isLoading = false
+        this.showNextPage = false
+        this.$bvToast.toast('Le serveur n\'a pu être contacté. Merci de ré-essayer ultérieurement.', {
+          title: 'Erreur',
+          autoHideDelay: 5000,
+          solid: true,
+          toaster: 'b-toaster-top-center',
+          variant: 'danger'
+        })
+      })
     }
   }
 }

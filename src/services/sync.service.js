@@ -2,13 +2,15 @@ import axios from 'axios'
 
 // const backURL = 'http://127.0.0.1:8000'
 const backURL = 'http://localhost:3000/api'
-const articleURL = backURL + '/article'
+const articleURL = backURL + '/articles'
 const allArticleURL = articleURL + '/all'
-const editeurURL = backURL + '/editeur'
+const editeurURL = backURL + '/editeurs'
 const loginURL = backURL + '/auth-tokens'
-const jeuURL = backURL + '/jeu'
-const personnaliteURL = backURL + '/personnalite'
-const roleURL = backURL + '/role'
+const jeuURL = backURL + '/jeux'
+const personnaliteURL = backURL + '/personnalites'
+const referencesURL = backURL + '/references'
+const roleURL = backURL + '/roles'
+const typeURL = backURL + '/types'
 
 axios.interceptors.request.use(function (config) {
   // Do something before request is sent
@@ -19,6 +21,16 @@ axios.interceptors.request.use(function (config) {
 
   return config
 }, function (error) {
+  console.log('Request - Erreur gérée par l\'intercepteur', error)
+  // Do something with request error
+  return Promise.reject(error)
+})
+axios.interceptors.response.use(function (response) {
+  console.log(response)
+  return Promise.resolve(response)
+}, function (error) {
+  console.log('Response - Erreur gérée par l\'intercepteur', error)
+  console.log(error.response)
   // Do something with request error
   return Promise.reject(error)
 })
@@ -62,9 +74,19 @@ export default {
       .get(personnaliteURL)
       .then(response => response.data)
   },
+  getReferences () {
+    return axios
+      .get(referencesURL)
+      .then(response => response.data)
+  },
   getRoles () {
     return axios
       .get(roleURL)
+      .then(response => response.data)
+  },
+  getAllTypes () {
+    return axios
+      .get(typeURL)
       .then(response => response.data)
   },
   postArticle (data) {
@@ -98,19 +120,20 @@ export default {
   postLogin (data) {
     const params = new URLSearchParams()
     params.append('data', JSON.stringify(data))
-
+    console.log('post', loginURL, params)
     return axios.post(
       loginURL,
       params
     ).then(response => {
+      console.log('postLogin', response)
       const token = response.data.token
-      /// const token = response.data.value
+      // const token = response.data.value
       console.log(token)
       localStorage.setItem('user-token', token)
       // setAuthToken(token)
       return token
     }).catch(e => {
-      console.log(e)
+      console.log('Login error', e)
       return Promise.reject(e)
     })
   },

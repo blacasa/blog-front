@@ -1,21 +1,21 @@
 <template>
+  <!-- Page affichant le détail d'un Article -->
   <div>
     <div v-if="isLoading" class="d-flex justify-content-center mb-3 bla-spinner">
       <b-spinner label="Chargement..."></b-spinner>
     </div>
-    <!-- Détail Article id: {{ id }} -->
     <b-card
       header-tag="header"
-      header-class="bla-card-header"
-      footer-class="bla-card-footer"
+      header-class="bla-detail-card-header"
+      footer-class="bla-detail-card-footer"
       :title="article.titre"
       tag="article"
-      class="mb-2 bla-card"
+      class="mb-2 bla-detail-card"
     >
       <template #header>
-        <Jeu :jeu="article.jeu" :image="article.image"/>
+        <Jeu :jeu="article.jeu"/>
       </template>
-      <b-card-text v-html="content" class="bla-card-content">
+      <b-card-text v-html="content" class="bla-detail-card-content">
       </b-card-text>
       <template #footer>
         <small>{{ publishedDate() }}</small>
@@ -50,7 +50,17 @@ export default {
       syncService.getArticle(this.id).then(function (data) {
         this.setArticle(data)
         this.isLoading = false
-      }.bind(this))
+      }.bind(this)).catch(() => {
+        this.isLoading = false
+        this.showNextPage = false
+        this.$bvToast.toast('Le serveur n\'a pu être contacté. Merci de ré-essayer ultérieurement.', {
+          title: 'Erreur',
+          autoHideDelay: 5000,
+          solid: true,
+          toaster: 'b-toaster-top-center',
+          variant: 'danger'
+        })
+      })
     } else {
       this.setArticle(paramArticle)
       this.isLoading = false
@@ -72,7 +82,7 @@ export default {
       this.article = newArticle
     },
     publishedDate: function () {
-      return 'Publié le ' + moment(this.article.datePublication).format('DD/MM/yyyy')
+      return this.article.datePublication ? 'Publié le ' + moment(this.article.datePublication).format('DD/MM/yyyy') : ''
     }
   }
 }
@@ -86,23 +96,47 @@ export default {
   margin-right: 2%;
   width: 20%;
 }
-.bla-card-header {
-  background-color: #A406DB;
-  color: rgb(240, 235, 235);
+@media screen and (min-width: 800px) {
+  .bla-detail-card-header {
+    color: rgb(240, 235, 235);
+    background-color: rgba(0, 0, 0, 0);
+    background-image: url('/images/flag_01_03.png');
+    background-size: 100% 100%;
+    border-bottom: none;
+  }
+  .bla-detail-card-footer {
+    background-color: rgba(0, 0, 0, 0);
+    background-image: url('/images/flag_01_02.png');
+    background-size: 100% 100%;
+    border-top: none;
+    color: #A406DB;
+  }
 }
-.bla-card {
+@media screen and (max-width: 799px) {
+  .bla-detail-card-header {
+    background-color: #A406DB;
+    color: rgb(240, 235, 235);
+    border-bottom: none;
+  }
+  .bla-detail-card-footer {
+    background-color: #5F8F00;
+    border-top: none;
+    color: rgb(240, 235, 235);
+  }
+}
+.bla-detail-card-header > div {
+  margin-top: 1.3em;
+}
+.bla-detail-card {
   background-color: rgb(240, 235, 235);
-  border: #A406DB solid ;
+  /*border: #A406DB solid ;*/
+  border: none;
   margin: 5% auto;
   width: 90%;
 }
-.bla-card-content {
+.bla-detail-card-content {
   margin: 5%;
   text-align: left;
-}
-.bla-card-footer {
-  background-color: #5F8F00;
-  color: rgb(240, 235, 235);
 }
 .centered-img {
   font-size: 0.8em;

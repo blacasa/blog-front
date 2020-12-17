@@ -1,15 +1,16 @@
 <template>
+  <!-- Composant affichant un Article en mode liste -->
   <div class="div-article">
     <b-card
       :header="this.headerCard()"
-      header-class="bla-card-header"
+      header-class="bla-list-card-header"
       tag="article"
       class="mb-2 bla-card"
       footer-tag="footer"
-      footer-class="bla-card-footer"
+      footer-class="bla-list-card-footer"
     >
       <b-card-text class="bla-card-content">
-        <img v-if="article.image !== null" v-bind:src="article.image" class="card-image"/>
+        <img v-if="article.jeu.image !== null" v-bind:src="article.jeu.image" class="card-image"/>
         <p v-html="content"></p>
         <p class="see-more">
         <b-link :to="{ name: 'Article', params: { id: article.id, article: article} }">Lire la suite</b-link>
@@ -42,7 +43,7 @@ export default {
       }
     },
     image: function () {
-      const img = this.article.image
+      const img = this.article.jeu.image
       return img
     }
   },
@@ -59,21 +60,42 @@ export default {
 <style scoped>
 .bla-card {
   background-color: rgb(240, 235, 235);
-  border: #A406DB solid ;
+  /*border: #A406DB solid ;*/
+  border: none;
   margin: 5% auto;
   width: 90%;
-}
-.bla-card-header {
-  background-color: #A406DB;
-  color: rgb(240, 235, 235);
 }
 .bla-card-content {
   background-color: rgb(240, 235, 235);
   text-align: left;
 }
-.bla-card-footer {
-  background-color: #5F8F00;
-  color: rgb(240, 235, 235);
+@media screen and (min-width: 800px) {
+  .bla-list-card-header {
+    color: rgb(240, 235, 235);
+    background-color: rgba(0, 0, 0, 0);
+    background-image: url('/images/flag_01_03.png');
+    background-size: 100% 100%;
+    border-bottom: none;
+  }
+  .bla-list-card-footer {
+    background-color: rgba(0, 0, 0, 0);
+    background-image: url('/images/flag_01_02.png');
+    background-size: 100% 100%;
+    border-top: none;
+    color: #A406DB;
+  }
+}
+@media screen and (max-width: 799px) {
+  .bla-list-card-header {
+    background-color: #A406DB;
+    color: rgb(240, 235, 235);
+    border-bottom: none;
+  }
+  .bla-list-card-footer {
+    background-color: #5F8F00;
+    border-top: none;
+    color: rgb(240, 235, 235);
+  }
 }
 .card-image {
   float: left;

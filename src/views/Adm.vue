@@ -98,10 +98,32 @@
               text-field="nom"
               v-on:change="jeuSelected"></b-form-select>
           </b-form-group>
-        <div class="image-div">Couverture
-          <input @change="handleImage" class="custom-input" type="file" accept="image/*"/>
-          <img style="" :src="formJeu.image" alt="">
-        </div>
+          <b-form-group
+            id="jeu-input-group-img"
+            label="Couverture:"
+            label-for="jeu-input-img"
+            label-cols="4"
+          >
+            <div class="image-div">
+              <input @change="handleImage" class="custom-input" type="file" accept="image/*"/>
+              <img style="" :src="formJeu.image" alt="">
+            </div>
+          </b-form-group>
+          <b-form-group
+            id="jeu-input-group-type"
+            label="Type de solo:"
+            label-for="jeu-input-type"
+            label-cols="4"
+          >
+            <b-form-checkbox-group
+              id="jeu-input-type"
+              v-model="formJeu.types"
+              :options="types"
+              value-field="id"
+              text-field="libelle"
+              name="flavour-1"
+            ></b-form-checkbox-group>
+          </b-form-group>
           <b-form-group
             id="jeu-input-group-editeur"
             label="Editeur:"
@@ -390,6 +412,7 @@ export default {
       editeurs: [],
       personnalites: [],
       roles: [],
+      types: [],
       jeux: [],
       formArticle: {
         titre: '',
@@ -419,7 +442,8 @@ export default {
         editeur: [],
         auteurs: [],
         illustrateurs: [],
-        jeu: {}
+        jeu: {},
+        types: []
       }
     }
   },
@@ -483,6 +507,10 @@ export default {
         this.jeux = response
         this.formatSortJeux()
       }.bind(this))
+      syncService.getAllTypes().then(function (response) {
+        this.types = response
+        this.formatSortTypes()
+      }.bind(this))
       // Récupérer les articles existants (même ceux non publiés => pour MAJ)
       syncService.getAllArticles().then(function (response) {
         this.articles = response
@@ -536,6 +564,13 @@ export default {
       })
       // console.log(this.roles)
     },
+    formatSortTypes: function () {
+      this.types.sort(function (first, second) {
+        if (first.libelle > second.libelle) return 1
+        else if (first.libelle < second.libelle) return -1
+        else return 0
+      })
+    },
     jeuSelected: function () {
       console.log('Jeu sélectionné: ', this.formArticle.jeu)
       console.log('Jeu sélectionné: ', this.formJeu.jeu)
@@ -567,6 +602,16 @@ export default {
       this.formJeu.dureeMax = selectedJeu.dureeMax
       this.formJeu.dureePartie = selectedJeu.dureePartie
       this.formJeu.envie = selectedJeu.envie
+      console.log('TODO: charger les type de solo')
+      const selectedType = []
+      if (selectedJeu.types) {
+        selectedJeu.types.map(typ => {
+          if (typ.id) {
+            selectedType.push(typ.id)
+          }
+        })
+      }
+      this.formJeu.types = selectedType
       const selectedEditeur = []
       if (selectedJeu.editeurs) {
         selectedJeu.editeurs.map(ed => {
@@ -609,7 +654,7 @@ export default {
         idJeu: this.formArticle.jeu,
         positif: this.formArticle.positif,
         negatif: this.formArticle.negatif,
-        datePublication: this.formArticle.datePublication,
+        datePublication: moment(this.formArticle.datePublication).format('yyyy-MM-DD'),
         image: this.formArticle.image,
         contenu: html
       }
@@ -680,7 +725,8 @@ export default {
         envie: this.formJeu.envie,
         editeur: this.formJeu.editeur.join(','),
         auteurs: this.formJeu.auteurs.join(','),
-        illustrateurs: this.formJeu.illustrateurs.join(',')
+        illustrateurs: this.formJeu.illustrateurs.join(','),
+        types: this.formJeu.selectedTypes.join(',')
       }
       console.log(data)
       syncService.postJeu(data).then(function (response) {
@@ -699,12 +745,14 @@ export default {
           envie: '',
           editeur: [],
           auteurs: [],
-          illustrateurs: []
+          illustrateurs: [],
+          selectedTypes: []
         }
         this.formArticle.image = null
       }.bind(this)).catch(function (e) {
         console.log('catch', e)
       })
+      // */
     }
   }
 }

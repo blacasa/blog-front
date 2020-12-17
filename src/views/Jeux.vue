@@ -95,7 +95,7 @@ export default {
             }
           }
         },
-        {
+        /* {
           key: 'editeurs',
           sortable: true,
           label: 'Editeur(s)',
@@ -105,6 +105,18 @@ export default {
               editors.push(editor.libelle)
             })
             return editors.join(', ')
+          }
+        },// */
+        {
+          key: 'types',
+          sortable: true,
+          label: 'Type de solo',
+          formatter: function (types) {
+            const soloType = []
+            types.forEach(type => {
+              soloType.push(type.libelle)
+            })
+            return soloType.join(', ')
           }
         },
         {
@@ -142,7 +154,17 @@ export default {
         syncService.getJeux().then(function (data) {
           this.jeux = data
           this.isLoading = false
-        }.bind(this))
+        }.bind(this)).catch(error => {
+          console.log('catch', error)
+          this.isLoading = false
+          this.$bvToast.toast('Le serveur n\'a pu être contacté. Merci de ré-essayer ultérieurement.', {
+            title: 'Erreur',
+            autoHideDelay: 5000,
+            solid: true,
+            toaster: 'b-toaster-top-center',
+            variant: 'danger'
+          })
+        })
       } else {
         this.jeux = store.state.games
         this.isLoading = false
@@ -158,13 +180,13 @@ export default {
   margin-top: 5%;
 }
 .border {
-  border: 1px solid #6C028F !important;
+  /*border: 1px solid #6C028F !important;*/
 }
 .jeu-row > td > div > a {
   color: #5F8F00;
 }
 .jeu-header > table > thead {
-  background-color: #6C028F;
+  background-color: #A406DB;
   color: rgb(240, 235, 235) !important;
 }
 .jeu-header > table > thead > tr > th > span{

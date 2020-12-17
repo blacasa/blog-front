@@ -1,16 +1,22 @@
 <template>
   <div class="div-jeu">
-    <img v-if="image" v-bind:src="couverture" class="card-image"/>
-    <div>
-      <ul v-if="jeu">
-        <li>{{ getTitre }} {{ getAnnee }}</li>
-        <li>{{ getNbJoueurs }}</li>
-        <li>{{ getDuree }}</li>
-        <li>{{ getAuteurs }}</li>
-        <li>{{ getIllustrateurs }}</li>
-        <li>{{ getEditeurs }}</li>
-      </ul>
-    </div>
+    <b-container class="bv-example-row">
+      <b-row>
+        <b-col cols="3">
+          <img v-if="typeof jeu !== 'undefined' && jeu.image !== null" v-bind:src="couverture" class="header-card-image"/>
+        </b-col>
+        <b-col cols="9">
+          <ul v-if="jeu">
+            <li>{{ getTitre }} {{ getAnnee }}</li>
+            <li>{{ getNbJoueurs }}</li>
+            <li>{{ getDuree }}</li>
+            <li>{{ getAuteurs }}</li>
+            <li>{{ getIllustrateurs }}</li>
+            <li>{{ getEditeurs }}</li>
+          </ul>
+        </b-col>
+      </b-row>
+    </b-container>
   </div>
 </template>
 
@@ -18,12 +24,11 @@
 export default {
   name: 'Jeu',
   props: {
-    jeu: {},
-    image: String
+    jeu: {}
   },
   computed: {
     couverture: function () {
-      const img = this.image
+      const img = this.jeu.image
       return img
     },
     getAnnee: function () {
@@ -81,10 +86,10 @@ li {
 .div-jeu {
   text-align: left;
 }
-.card-image {
-  float: left;
-  margin-right: 2%;
+.header-card-image {
+  display: block;
   height: 9em;
+  margin-left: auto;
 }
 .div-article{
   margin-bottom: 10px;

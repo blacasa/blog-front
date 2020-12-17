@@ -1,4 +1,5 @@
 <template>
+  <!-- Page listant les articles -->
   <div>
     <b-pagination
       v-if="articles.length > perPage"

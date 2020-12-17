@@ -1,7 +1,7 @@
 <template>
     <div>
       <b-navbar type="dark" variant="info">
-        <b-navbar-brand to="/">13 jeux solo</b-navbar-brand>
+        <b-navbar-brand to="/"><img src="/images/dragon.png" alt="13" class="bla-brand-icon">13 jeux solo</b-navbar-brand>
         <b-navbar-nav>
           <!--<b-nav-item to="/">Accueil</b-nav-item>-->
           <b-nav-item to="/articles">Articles</b-nav-item>
@@ -14,6 +14,7 @@
         <b-navbar-nav class="ml-auto">
           <b-nav-form>
             <b-form-input v-model="searchGame" @keyup.enter="search()" size="sm" class="mr-sm-2" placeholder="Recherche"></b-form-input>
+            <b-button size="sm" class="my-2 my-sm-0 btn-search" v-on:click="clearSearch"><b-icon icon="x-circle" aria-hidden="true"></b-icon></b-button>
             <b-button size="sm" class="my-2 my-sm-0 btn-search" v-on:click="search"><b-icon icon="search" aria-hidden="true"></b-icon></b-button>
           </b-nav-form>
         </b-navbar-nav>
@@ -47,9 +48,14 @@ export default {
         router.push({ name: 'Home' })
       }
     },
+    clearSearch: function () {
+      console.log('clearSearch')
+      this.searchGame = ''
+      this.$emit('search', this.searchGame)
+    },
     search: function () {
       this.$emit('search', this.searchGame)
-      this.searchGame = ''
+      // this.searchGame = ''
     }
   }
 }
@@ -58,6 +64,9 @@ export default {
 <style scoped>
 .bg-info {
   background-color: #6C028F !important;
+}
+.bla-brand-icon {
+  height: 2em;
 }
 .btn-search {
   background-color: #6C028F !important;
