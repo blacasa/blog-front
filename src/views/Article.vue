@@ -18,7 +18,33 @@
       <b-card-text v-html="content" class="bla-detail-card-content">
       </b-card-text>
       <template #footer>
-        <small>{{ publishedDate() }}</small>
+        <b-container class="bv-example-row">
+          <b-row>
+            <b-col cols="3">
+              <small>{{ publishedDate() }}</small>
+            </b-col>
+            <b-col cols="3">
+            </b-col>
+            <b-col cols="3">
+              <b-form-select
+                id="article-lang"
+                v-if="existingVoices.length > 0"
+                v-model="selectedVoice"
+                :options="existingVoices"
+                class="mb-3"
+                v-on:change="langChanged">
+              </b-form-select>
+            </b-col>
+            <b-col cols="3">
+              <b-button size="sm" class="my-2 my-sm-0 btn-read" v-on:click="readArticle">
+                <b-icon icon="play" aria-hidden="true"></b-icon>
+              </b-button>
+              <b-button size="sm" class="my-2 my-sm-0 btn-read" v-on:click="stopReadArticle">
+                <b-icon icon="stop" aria-hidden="true"></b-icon>
+              </b-button>
+            </b-col>
+          </b-row>
+        </b-container>
       </template>
     </b-card>
   </div>
@@ -38,7 +64,12 @@ export default {
     return {
       id: null,
       article: {},
-      isLoading: true
+      isLoading: true,
+      voices: [],
+      existingVoices: [],
+      defaultLang: null,
+      selectedLang: null,
+      selectedVoice: {}
     }
   },
   mounted: function () {
@@ -65,12 +96,24 @@ export default {
       this.setArticle(paramArticle)
       this.isLoading = false
     }
+    window.speechSynthesis.onvoiceschanged = () => {
+      const voix = window.speechSynthesis.getVoices()
+      // (67) [SpeechSynthesisVoice, SpeechSynthesisVoice, ...]
+      this.voices = []
+      voix.forEach((voice, key) => {
+        this.existingVoices.push({
+          text: voice.name + ' (' + voice.lang + ')',
+          value: key
+        })
+        this.voices.push(voice)
+      })
+    }
   },
   computed: {
     content: function () {
       const updatedContent = this.article.contenu ? this.article.contenu
-        .replace('[img]', '<div class="centered-img">')
-        .replace('[/img]', '</div>') : this.article.contenu
+        .replaceAll('[img]', '<div class="centered-img">')
+        .replaceAll('[/img]', '</div>') : this.article.contenu
       return updatedContent
     }
   },
@@ -83,6 +126,63 @@ export default {
     },
     publishedDate: function () {
       return this.article.datePublication ? 'Publié le ' + moment(this.article.datePublication).format('DD/MM/yyyy') : ''
+    },
+    langChanged: function () {
+      this.selectedLang = this.voices[this.selectedVoice]
+    },
+    readArticle: function () {
+      const SpeechSynthesisUtterance =
+        window.webkitSpeechSynthesisUtterance ||
+        window.mozSpeechSynthesisUtterance ||
+        window.msSpeechSynthesisUtterance ||
+        window.oSpeechSynthesisUtterance ||
+        window.SpeechSynthesisUtterance
+      if (this.selectedLang === null) {
+        let loadVoices = false
+        if (this.voices.length === 0) {
+          loadVoices = true
+        }
+        this.voices = window.speechSynthesis.getVoices()
+        // (67) [SpeechSynthesisVoice, SpeechSynthesisVoice, ...]
+        this.voices.forEach((voice, key) => {
+          if (loadVoices) {
+            this.existingVoices.push({
+              text: voice.name + ' (' + voice.lang + ')',
+              value: key
+            })
+          }
+          this.voices.push(voice)
+          if (this.defaultLang === null && voice.lang === 'fr-FR') {
+            this.selectedLang = voice
+          }
+        })
+      }
+      if (SpeechSynthesisUtterance !== undefined && this.selectedLang !== null) {
+        // (67) [SpeechSynthesisVoice, SpeechSynthesisVoice, ...]
+        const speak = new SpeechSynthesisUtterance(
+          this.article.contenu.replace(/(<([^>]+)>)/gi, '')
+            .replaceAll('&amp;', '&')
+            .replaceAll('[img]', '<div class="centered-img">')
+            .replaceAll('[/img]', '</div>')
+        )
+        speak.voice = this.selectedLang
+        window.speechSynthesis.cancel()
+        window.speechSynthesis.speak(speak)
+      } else {
+        console.warn('sorry not supported 😭')
+      }
+    },
+    stopReadArticle: function () {
+      window.speechSynthesis.cancel()
+    },
+    pauseReadArticle: function () {
+      // console.log(window.speechSynthesis)
+      if (window.speechSynthesis.paused) {
+        window.speechSynthesis.resume()
+      } else {
+        window.speechSynthesis.pause()
+      }
+      // console.log(window.speechSynthesis)
     }
   }
 }
@@ -90,6 +190,11 @@ export default {
 <style>
 .bla-spinner{
   margin-top: 5%;
+}
+.btn-read {
+  background-color: #6C028F !important;
+  border: none;
+  margin-left: 2px;
 }
 .card-image {
   float: left;
