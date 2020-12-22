@@ -1,17 +1,19 @@
 <template>
   <!-- Page listant les articles -->
   <div>
-    <b-pagination
-      v-if="articles.length > perPage"
-      v-model="currentPage"
-      :total-rows="rows"
-      :per-page="perPage"
-      aria-controls="articles-list"
-      pills
-      align="center"
-      size="sm"
-    >
-    </b-pagination>
+    <div class="top-pagination">
+      <b-pagination
+        v-if="articles.length > perPage"
+        v-model="currentPage"
+        :total-rows="rows"
+        :per-page="perPage"
+        aria-controls="articles-list"
+        pills
+        align="center"
+        size="sm"
+      >
+      </b-pagination>
+    </div>
 
     <div id="articles-list">
       <Article
@@ -83,3 +85,9 @@ export default {
   }
 }
 </script>
+
+<style >
+.top-pagination {
+  margin-top: 10px;
+}
+</style>

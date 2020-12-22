@@ -88,8 +88,9 @@ li {
 }
 .header-card-image {
   display: block;
-  height: 9em;
+  max-height: 9em;
   margin-left: auto;
+  max-width: 100%;
 }
 .div-article{
   margin-bottom: 10px;
