@@ -4,7 +4,9 @@
       v-bind:adminMode="adminMode"
       v-on:update-menu="showAdmin"
       v-on:search="search"/>
-    <router-view v-on:update-menu="showAdmin"/>
+    <div site="site-content">
+      <router-view v-on:update-menu="showAdmin"/>
+    </div>
     <bas />
   </div>
 </template>
@@ -58,5 +60,18 @@ export default {
   color: #2c3e50;
   padding: 5px 5px auto 5px;
   background-color: rgb(240, 235, 235);
+}
+html {
+  background-color: rgb(240, 235, 235);
+}
+body {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: rgb(240, 235, 235) !important;
+}
+.site-content {
+  flex: 1;
 }
 </style>

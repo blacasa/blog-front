@@ -33,5 +33,7 @@ export default {
 .bg-info {
   background-color: #6C028F !important;
   color: rgb(240, 235, 235);
+  height: 25px;
+  width: 100%;
 }
 </style>
