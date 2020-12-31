@@ -726,7 +726,7 @@ export default {
         editeur: this.formJeu.editeur.join(','),
         auteurs: this.formJeu.auteurs.join(','),
         illustrateurs: this.formJeu.illustrateurs.join(','),
-        types: this.formJeu.selectedTypes.join(',')
+        types: this.formJeu.types.join(',')
       }
       console.log(data)
       syncService.postJeu(data).then(function (response) {

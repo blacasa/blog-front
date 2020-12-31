@@ -1,6 +1,6 @@
 <template>
     <div class="bg-info">
-      ©2020
+      ©2020-2021
     </div>
 </template>
 

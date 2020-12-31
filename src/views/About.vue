@@ -13,7 +13,7 @@
       Ce blog est développé par mes soins. Il a été développé avec Vue et Bootstrap pour le front, le backend utilise Node et une base de données MySql. Je peux ainsi faire des tests. C'est pour cela que sur les articles, vous trouverez en bas de page un bouton de lecture qui lira l'article.
     </div>
     <div class="social">
-      Vous pourrez me retrouver sur Twitter, ou sur les forums de TricTrac (et plus particulièrement sur le topic défi solo).
+      Vous pourrez me retrouver sur <a href="https://twitter.com/13jeuxsolo">Twitter</a>, sur les forums de TricTrac (et plus particulièrement sur le topic défi solo), ou me contacter <a href="mailto:contact@13jeuxsolo.fr">par mail</a>.
     </div>
   </div>
 </template>

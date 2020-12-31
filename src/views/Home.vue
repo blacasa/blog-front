@@ -6,7 +6,7 @@
     <!-- Liste articles -->
     <Articles :limit="this.limit" :articles="this.articles"/>
     <!-- Voir plus d'articles -->
-    <b-link :to="{ name: 'Archives', params: { page: 2 } }">Voir plus d'article</b-link>
+    <div v-if="showNextPage"><b-link :to="{ name: 'Archives', params: { page: 2 } }">Voir plus d'articles</b-link></div>
   </div>
 </template>
 
