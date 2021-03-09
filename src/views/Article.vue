@@ -95,6 +95,8 @@ export default {
     } else {
       this.setArticle(paramArticle)
       this.isLoading = false
+      // Juste pour les stats::
+      syncService.getArticle(this.id)
     }
     window.speechSynthesis.onvoiceschanged = () => {
       const voix = window.speechSynthesis.getVoices()

@@ -29,7 +29,7 @@
           <div
             v-for="art in row.item.articles"
             :key="art.id">
-            <b-link :to="{ name: 'Article', params: { id: art.id } }" class="link-article">{{ art.titre }}</b-link>
+            <b-link :to="{ name: 'Article', params: { id: art.codeUrl ? art.codeUrl : art.id} }" class="link-article">{{ art.titre }}</b-link>
             &nbsp;({{ art.datePublication | moment('DD/MM/YYYY')}})
           </div>
         </template>

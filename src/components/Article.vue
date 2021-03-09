@@ -13,7 +13,7 @@
         <img v-if="article.jeu.image !== null" v-bind:src="article.jeu.image" class="card-image"/>
         <p v-html="content"></p>
         <p class="see-more">
-        <b-link :to="{ name: 'Article', params: { id: article.id, article: article} }">Lire la suite</b-link>
+        <b-link :to="{ name: 'Article', params: { id: article.codeUrl ? article.codeUrl : article.id, article: article} }">Lire la suite</b-link>
         </p>
       </b-card-text>
 
@@ -37,7 +37,7 @@ export default {
   computed: {
     content: function () {
       if (this.mode === 'light') {
-        return this.article.contenu.substring(0, 200) + '...'
+        return this.article.contenu.substring(0, 800) + '...'
       } else {
         return this.article.contenu
       }
@@ -101,6 +101,7 @@ export default {
   float: left;
   margin-right: 2%;
   width: 20%;
+  max-width: 200px;
 }
 .div-article{
   margin-bottom: 10px;

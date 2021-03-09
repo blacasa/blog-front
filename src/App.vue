@@ -25,6 +25,7 @@ export default {
   },
   mounted: function () {
     this.showAdmin()
+    this.getLocalisation()
   },
   data () {
     return {
@@ -33,6 +34,19 @@ export default {
     }
   },
   methods: {
+    getLocalisation: function () {
+      console.log('getLocalisation')
+      syncService.getLocalisation()
+        .then(localisation => {
+          console.log('fin getLocalisation', localisation)
+          const location = {
+            country: localisation.country,
+            region: localisation.region,
+            city: localisation.city
+          }
+          localStorage.setItem('stats', JSON.stringify(location))
+        })
+    },
     search: function (search) {
       syncService.getJeux(search).then(function (data) {
         store.commit('setGames', data)

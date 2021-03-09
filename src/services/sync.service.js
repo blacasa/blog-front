@@ -2,6 +2,9 @@ import axios from 'axios'
 
 // const backURL = 'http://127.0.0.1:8000'
 const backURL = 'http://localhost:3000/api'
+// const locationURL = 'https://ipinfo.io/json'
+// const locationURL = 'https://ipapi.com/json'
+// const locationURL = 'http://ip-api.com/json'
 const articleURL = backURL + '/articles'
 const allArticleURL = articleURL + '/all'
 const editeurURL = backURL + '/editeurs'
@@ -13,10 +16,17 @@ const roleURL = backURL + '/roles'
 const typeURL = backURL + '/types'
 
 axios.interceptors.request.use(function (config) {
+  console.log('interceptor')
   // Do something before request is sent
   if (config.method === 'post') {
     const token = localStorage.getItem('user-token')
     config.headers.common.Authorization = `Bearer ${token}`
+  }
+  console.log('interceptor', config)
+  const stats = localStorage.getItem('stats')
+  console.log('interceptor', stats)
+  if (stats && config.url !== locationURL) {
+    config.headers.common.stats = stats
   }
 
   return config
@@ -26,7 +36,7 @@ axios.interceptors.request.use(function (config) {
   return Promise.reject(error)
 })
 axios.interceptors.response.use(function (response) {
-  console.log(response)
+  // console.log(response)
   return Promise.resolve(response)
 }, function (error) {
   console.log('Response - Erreur gérée par l\'intercepteur', error)
@@ -36,6 +46,11 @@ axios.interceptors.response.use(function (response) {
 })
 
 export default {
+  getLocalisation () {
+    return axios
+      .get(locationURL)
+      .then(response => response.data)
+  },
   getAllArticles () {
     return axios
       .get(allArticleURL)
@@ -95,7 +110,8 @@ export default {
 
     return axios.post(
       articleURL,
-      params
+      params,
+      { timeout: 5000 }
     ).then(response => {
       return response.data
     }).catch(e => {
@@ -109,7 +125,8 @@ export default {
 
     return axios.post(
       editeurURL,
-      params
+      params,
+      { timeout: 5000 }
     ).then(response => {
       return response.data
     }).catch(e => {
@@ -123,7 +140,8 @@ export default {
     console.log('post', loginURL, params)
     return axios.post(
       loginURL,
-      params
+      params,
+      { timeout: 5000 }
     ).then(response => {
       console.log('postLogin', response)
       const token = response.data.token
@@ -143,7 +161,8 @@ export default {
 
     return axios.post(
       personnaliteURL,
-      params
+      params,
+      { timeout: 5000 }
     ).then(response => {
       return response.data
     }).catch(e => {
@@ -157,7 +176,8 @@ export default {
 
     return axios.post(
       jeuURL,
-      params
+      params,
+      { timeout: 5000 }
     ).then(response => {
       return response.data
     }).catch(e => {
