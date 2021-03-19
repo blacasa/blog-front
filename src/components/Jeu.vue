@@ -21,6 +21,8 @@
 </template>
 
 <script>
+import constants from '../globals'
+
 export default {
   name: 'Jeu',
   props: {
@@ -28,7 +30,7 @@ export default {
   },
   computed: {
     couverture: function () {
-      const img = this.jeu.image
+      const img = constants.imagesURL + this.jeu.image
       return img
     },
     getAnnee: function () {

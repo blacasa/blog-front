@@ -25,7 +25,11 @@ export default {
   },
   mounted: function () {
     this.showAdmin()
-    this.getLocalisation()
+    const stats = localStorage.getItem('stats')
+    console.log('stats', stats)
+    if (stats === null) {
+      this.getLocalisation()
+    }
   },
   data () {
     return {

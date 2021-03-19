@@ -5,12 +5,14 @@
         <b-navbar-nav>
           <!--<b-nav-item to="/">Accueil</b-nav-item>-->
           <b-nav-item to="/articles">Articles</b-nav-item>
+          <!--<b-nav-item to="/categories">Catégories</b-nav-item>-->
           <b-nav-item to="/jeux">Jeux</b-nav-item>
           <b-nav-item to="/about">A propos</b-nav-item>
           <b-nav-item to="/adm" v-if="adminMode">Adm</b-nav-item>
           <b-nav-item to="/login" v-if="false">Connexion</b-nav-item>
           <b-nav-text v-if="adminMode" v-on:click="logout">Déconnexion</b-nav-text>
         </b-navbar-nav>
+        <!--
         <b-navbar-nav class="ml-auto">
           <b-nav-form>
             <b-form-input v-model="searchGame" @keyup.enter="search()" size="sm" class="mr-sm-2" placeholder="Recherche"></b-form-input>
@@ -18,6 +20,7 @@
             <b-button size="sm" class="my-2 my-sm-0 btn-search" v-on:click="search"><b-icon icon="search" aria-hidden="true"></b-icon></b-button>
           </b-nav-form>
         </b-navbar-nav>
+        -->
       </b-navbar>
     </div>
 </template>

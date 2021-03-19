@@ -8,7 +8,8 @@
       header-tag="header"
       header-class="bla-detail-card-header"
       footer-class="bla-detail-card-footer"
-      :title="article.titre"
+      :title="getTitle()"
+      title-tag="h1"
       tag="article"
       class="mb-2 bla-detail-card"
     >
@@ -24,6 +25,12 @@
               <small>{{ publishedDate() }}</small>
             </b-col>
             <b-col cols="3">
+              <small>{{ categoriesLabel() }}</small>
+              <span v-for="(cat, index) in catLibelles" :key="cat.code">
+                <small>
+                  <b-link :to="{ name: 'Archives', params: { categorie: cat.code} }" class="cat-link">{{ cat.libelle }}<span v-if="index !== catLibelles.length-1">, </span></b-link>
+                </small>
+              </span>
             </b-col>
             <b-col cols="3">
               <b-form-select
@@ -51,6 +58,7 @@
 </template>
 
 <script>
+import constants from '../globals'
 import syncService from '../services/sync.service.js'
 import Jeu from '../components/Jeu'
 import moment from 'moment'
@@ -69,14 +77,16 @@ export default {
       existingVoices: [],
       defaultLang: null,
       selectedLang: null,
-      selectedVoice: {}
+      selectedVoice: {},
+      catLibelles: null
     }
   },
   mounted: function () {
     this.isLoading = true
     const id = this.$route.params ? this.$route.params.id : -1
     this.setId(id)
-    const paramArticle = this.$route.params && this.$route.params.article ? this.$route.params.article : null
+    // const paramArticle = this.$route.params && this.$route.params.article ? this.$route.params.article : null
+    const paramArticle = null
     if (paramArticle === null) {
       syncService.getArticle(this.id).then(function (data) {
         this.setArticle(data)
@@ -113,8 +123,16 @@ export default {
   },
   computed: {
     content: function () {
+      /*
+       * [img]
+       * [capture] titre.png
+       * [/capture]
+       * [/img]
+       */
       const updatedContent = this.article.contenu ? this.article.contenu
         .replaceAll('[img]', '<div class="centered-img">')
+        .replaceAll('[capture]', '<img src="' + constants.imagesURL + 'articles/')
+        .replaceAll('[/capture]', '" class="capture-img" />')
         .replaceAll('[/img]', '</div>') : this.article.contenu
       return updatedContent
     }
@@ -125,9 +143,14 @@ export default {
     },
     setArticle: function (newArticle) {
       this.article = newArticle
+      document.title = newArticle.titre
+      document.querySelector('meta[name="description"]').setAttribute('content', newArticle.titre + ' | Article consacré solo du jeu ' + newArticle.jeu.nom)
     },
     publishedDate: function () {
       return this.article.datePublication ? 'Publié le ' + moment(this.article.datePublication).format('DD/MM/yyyy') : ''
+    },
+    getTitle: function () {
+      return (this.article.jeu ? this.article.jeu.nom + ' - ' : '') + this.article.titre
     },
     langChanged: function () {
       this.selectedLang = this.voices[this.selectedVoice]
@@ -185,6 +208,27 @@ export default {
         window.speechSynthesis.pause()
       }
       // console.log(window.speechSynthesis)
+    },
+    categoriesLabel: function () {
+      if (this.catLibelles !== null) {
+        return 'Categorie' + (this.catLibelles.length > 1 ? 's' : '') + ': '
+      }
+      const catCodes = this.article.categories ? this.article.categories.split('|') : null
+      if (catCodes !== null) {
+        const references = JSON.parse(localStorage.getItem('references'))
+        const referenceCatagories = references.categories
+        this.catLibelles = catCodes.map(categorieCode => {
+          const foundedCat = referenceCatagories.filter(refCategorie => {
+            return refCategorie.code === categorieCode
+          })
+          if (foundedCat) {
+            return foundedCat[0]
+          }
+        })
+
+        return 'Categorie' + (this.catLibelles.length > 1 ? 's' : '') + ': '
+      }
+      return ''
     }
   }
 }
@@ -218,6 +262,9 @@ export default {
     border-top: none;
     color: #A406DB;
   }
+  .capture-img {
+    width: 400px;
+  }
 }
 @media screen and (max-width: 799px) {
   .bla-detail-card-header {
@@ -229,6 +276,9 @@ export default {
     background-color: #5F8F00;
     border-top: none;
     color: rgb(240, 235, 235);
+  }
+  .capture-img {
+    width: 200px;
   }
 }
 .bla-detail-card-header > div {

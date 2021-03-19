@@ -55,6 +55,8 @@ export default {
       }
     }).bind(this)
     this.fetchData()
+    document.title = 'Jeux'
+    document.querySelector('meta[name="description"]').setAttribute('content', 'Liste des jeux solo ayant eu un article')
   },
   data: function () {
     return {

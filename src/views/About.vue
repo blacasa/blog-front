@@ -7,7 +7,7 @@
       J'ai découvert les jeux de sociétés modernes aux alentours de 2010. J'ai des goûts assez ecclectiques tant en termes de mécaniques, thème ou encore nombre de joueur.
     </div>
     <div class="but">
-      Ce blog va me permettre de parler de jeux de plateau jouable en solitaire. Je présenterai essentiellement les jeux qui m'ont plu dans leur configuration solo.
+      Ce blog va me permettre de parler de jeux de plateau jouables en solitaire. Je présenterai essentiellement les jeux qui m'ont plu dans leur configuration solo.
     </div>
     <div class="technique">
       Ce blog est développé par mes soins. Il a été développé avec Vue et Bootstrap pour le front, le backend utilise Node et une base de données MySql. Je peux ainsi faire des tests. C'est pour cela que sur les articles, vous trouverez en bas de page un bouton de lecture qui lira l'article.
@@ -17,6 +17,15 @@
     </div>
   </div>
 </template>
+
+<script>
+export default {
+  mounted: function () {
+    document.title = 'A propos'
+    document.querySelector('meta[name="description"]').setAttribute('content', 'Page "à propos" du site 13jeuxsolo.fr')
+  }
+}
+</script>
 
 <style scoped>
 .about {

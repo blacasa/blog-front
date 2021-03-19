@@ -4,7 +4,7 @@
       <b-spinner label="Chargement..."></b-spinner>
     </div>
     <!-- Liste articles -->
-    <Articles :limit="this.limit" :articles="this.articles"/>
+    <Articles :limit="this.limit" :articles="this.articles" :showCategories="false"/>
     <!-- Voir plus d'articles -->
     <div v-if="showNextPage"><b-link :to="{ name: 'Archives', params: { page: 2 } }">Voir plus d'articles</b-link></div>
   </div>
@@ -32,12 +32,15 @@ export default {
   },
   mounted: function () {
     this.fetchData()
+    document.title = '13jeuxsolo.fr | le blog des jeux de société en solo'
+    document.querySelector('meta[name="description"]').setAttribute('content', 'Blog consacré aux jeux de société jouable en solitaire')
   },
   methods: {
     fetchData: function () {
       this.isLoading = true
-      syncService.getReferences().then(data => {
-        this.publishedArticles = data.nbPublishedArticles
+      syncService.getReferences().then(references => {
+        localStorage.setItem('references', JSON.stringify(references))
+        this.publishedArticles = references.nbPublishedArticles
         syncService.getArticles(this.limit).then(function (data) {
           this.articles = data
           this.isLoading = false

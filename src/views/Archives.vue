@@ -4,7 +4,7 @@
       <b-spinner label="Chargement..."></b-spinner>
     </div>
     <!-- Liste articles -->
-    <Articles :articles="this.articles"/>
+    <Articles :articles="this.articles"  :showCategories="true"/>
   </div>
 </template>
 
@@ -26,6 +26,8 @@ export default {
   },
   mounted: function () {
     this.fetchData()
+    document.title = 'Liste des articles'
+    document.querySelector('meta[name="description"]').setAttribute('content', 'Liste des articles publiés sur le site 13jeuxsolo.fr')
   },
   methods: {
     fetchData: function () {

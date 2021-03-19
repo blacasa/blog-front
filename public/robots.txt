@@ -1,2 +1,3 @@
 User-agent: *
 Disallow:
+Sitemap: <lien url="https://www.13jeuxsolo.fr/sitemap.xml">https://www.13jeuxsolo.fr/sitemap.xml</lien>
