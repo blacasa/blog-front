@@ -14,7 +14,7 @@
       class="mb-2 bla-detail-card"
     >
       <template #header>
-        <Jeu :jeu="article.jeu"/>
+        <Jeu v-if="article.jeu !== null" :jeu="article.jeu"/>
       </template>
       <b-card-text v-html="content" class="bla-detail-card-content">
       </b-card-text>
@@ -144,7 +144,11 @@ export default {
     setArticle: function (newArticle) {
       this.article = newArticle
       document.title = newArticle.titre
-      document.querySelector('meta[name="description"]').setAttribute('content', newArticle.titre + ' | Article consacré solo du jeu ' + newArticle.jeu.nom)
+      let desc = newArticle.titre
+      if (newArticle.jeu !== null) {
+        desc += ' | Article consacré solo du jeu ' + newArticle.jeu.nom
+      }
+      document.querySelector('meta[name="description"]').setAttribute('content', desc)
     },
     publishedDate: function () {
       return this.article.datePublication ? 'Publié le ' + moment(this.article.datePublication).format('DD/MM/yyyy') : ''
@@ -188,6 +192,8 @@ export default {
           this.article.contenu.replace(/(<([^>]+)>)/gi, '')
             .replaceAll('&amp;', '&')
             .replaceAll('[img]', '<div class="centered-img">')
+            .replaceAll('[capture]', '<img src="' + constants.imagesURL + 'articles/')
+            .replaceAll('[/capture]', '" class="capture-img" />')
             .replaceAll('[/img]', '</div>')
         )
         speak.voice = this.selectedLang
@@ -251,19 +257,19 @@ export default {
   .bla-detail-card-header {
     color: rgb(240, 235, 235);
     background-color: rgba(0, 0, 0, 0);
-    background-image: url('/images/flag_01_03.png');
+    background-image: url('/images/flag_01_03.webp');
     background-size: 100% 100%;
     border-bottom: none;
   }
   .bla-detail-card-footer {
     background-color: rgba(0, 0, 0, 0);
-    background-image: url('/images/flag_01_02.png');
+    background-image: url('/images/flag_01_02.webp');
     background-size: 100% 100%;
     border-top: none;
     color: #A406DB;
   }
   .capture-img {
-    width: 400px;
+    width: 600px;
   }
 }
 @media screen and (max-width: 799px) {
@@ -278,7 +284,7 @@ export default {
     color: rgb(240, 235, 235);
   }
   .capture-img {
-    width: 200px;
+    width: 300px;
   }
 }
 .bla-detail-card-header > div {

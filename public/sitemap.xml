@@ -54,4 +54,22 @@
     <changefreq>monthly</changefreq>
     <priority>0.2</priority>
   </url>
+  <url>
+    <loc>https://www.13jeuxsolo.fr/#/article/d-day-dice-le-de-debarquement</loc>
+    <lastmod>2020-03-22</lastmod>
+    <changefreq>never</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://www.13jeuxsolo.fr/article/wild-space-quartz-attacks</loc>
+    <lastmod>2020-03-27</lastmod>
+    <changefreq>never</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://www.13jeuxsolo.fr/article/way-of-the-samurai-telle-est-la-voie</loc>
+    <lastmod>2020-04-03</lastmod>
+    <changefreq>never</changefreq>
+    <priority>0.5</priority>
+  </url>
 </urlset>

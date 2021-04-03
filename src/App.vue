@@ -26,9 +26,14 @@ export default {
   mounted: function () {
     this.showAdmin()
     const stats = localStorage.getItem('stats')
-    console.log('stats', stats)
+    // console.log('stats', stats)
     if (stats === null) {
       this.getLocalisation()
+    }
+    const references = localStorage.getItem('references')
+    // console.log('stats', stats)
+    if (references === null) {
+      this.getReferences()
     }
   },
   data () {
@@ -50,6 +55,11 @@ export default {
           }
           localStorage.setItem('stats', JSON.stringify(location))
         })
+    },
+    getReferences: function () {
+      syncService.getReferences().then(references => {
+        localStorage.setItem('references', JSON.stringify(references))
+      })
     },
     search: function (search) {
       syncService.getJeux(search).then(function (data) {

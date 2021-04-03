@@ -64,13 +64,22 @@ export default {
       }
     },
     image: function () {
-      const img = this.article.jeu.image !== null ? constants.imagesURL + this.article.jeu.image : null
+      const img = this.article.jeu !== null && this.article.jeu.image !== null
+        ? constants.imagesURL + this.article.jeu.image
+        : null
+
       return img
     }
   },
   methods: {
     headerCard: function () {
-      return this.article.jeu.nom + ' - ' + this.article.titre
+      let headerTitle = ''
+      if (this.article.jeu !== null) {
+        headerTitle += this.article.jeu.nom + ' - '
+      }
+      headerTitle += this.article.titre
+
+      return headerTitle
     },
     publishedDate: function () {
       return 'Publié le ' + moment(this.article.datePublication).format('DD/MM/yyyy')
@@ -123,13 +132,13 @@ export default {
   .bla-list-card-header {
     color: rgb(240, 235, 235);
     background-color: rgba(0, 0, 0, 0);
-    background-image: url('/images/flag_01_03.png');
+    background-image: url('/images/flag_01_03.webp');
     background-size: 100% 100%;
     border-bottom: none;
   }
   .bla-list-card-footer {
     background-color: rgba(0, 0, 0, 0);
-    background-image: url('/images/flag_01_02.png');
+    background-image: url('/images/flag_01_02.webp');
     background-size: 100% 100%;
     border-top: none;
     color: #A406DB;

@@ -1,7 +1,7 @@
 <template>
     <div>
       <b-navbar type="dark" variant="info">
-        <b-navbar-brand to="/"><img src="/images/dragon.png" alt="13" class="bla-brand-icon">13 jeux solo</b-navbar-brand>
+        <b-navbar-brand to="/"><img src="/images/dragon.webp" alt="13" class="bla-brand-icon">13 jeux solo</b-navbar-brand>
         <b-navbar-nav>
           <!--<b-nav-item to="/">Accueil</b-nav-item>-->
           <b-nav-item to="/articles">Articles</b-nav-item>
@@ -69,7 +69,8 @@ export default {
   background-color: #6C028F !important;
 }
 .bla-brand-icon {
-  height: 2em;
+  height: 40px;
+  width: 40px;
 }
 .btn-search {
   background-color: #6C028F !important;

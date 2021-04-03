@@ -312,12 +312,23 @@
             text-field="fullTitre"
             v-on:change="articleSelected"></b-form-select>
         </b-form-group>
+        <b-form-group
+          id="article-input-group-categories"
+          label="Catégories:"
+          label-for="article-input-categories"
+          label-cols="4"
+        >
+          <b-form-checkbox-group
+            id="article-input-categories"
+            v-model="formArticle.categories"
+            :options="categories"
+            value-field="id"
+            text-field="libelle"
+            name="flavour-1"
+          ></b-form-checkbox-group>
+        </b-form-group>
         <div>
           <b-form-input v-model="formArticle.titre" placeholder="Titre"></b-form-input>
-        </div>
-        <div class="image-div">
-          <input @change="handleImage" class="custom-input" type="file" accept="image/*"/>
-          <img style="" :src="formArticle.image" alt="">
         </div>
         <!-- editeur -->
         <editor
@@ -414,13 +425,16 @@ export default {
       roles: [],
       types: [],
       jeux: [],
+      categories: [],
+      selectedCategories: [],
       formArticle: {
         titre: '',
         image: null,
         positif: '',
         negatif: '',
         datePublication: null,
-        jeu: null
+        jeu: null,
+        categories: []
       },
       formEditeur: {
         libelle: '',
@@ -466,16 +480,31 @@ export default {
       reader.readAsDataURL(fileObject)
     },
     articleSelected: function () {
-      console.log('ID article sélectionné: ', this.selectedArticleId)
+      // console.log('ID article sélectionné: ', this.selectedArticleId)
       const idArticleSelected = this.selectedArticleId
       this.selectedArticle = {}
       this.existingArticles.map(function (article) {
-        console.log(article.id, idArticleSelected)
+        // console.log(article.id, idArticleSelected)
         if (article.id === idArticleSelected) {
           this.selectedArticle = article
         }
       }.bind(this))
-      console.log('article sélectionné: ', this.selectedArticle.id, this.selectedArticle.titre)
+      const catCodes = this.selectedArticle.categories ? this.selectedArticle.categories.split('|') : null
+      let selectedArticleCategories = []
+      if (catCodes !== null) {
+        const references = JSON.parse(localStorage.getItem('references'))
+        const referenceCatagories = references.categories
+        selectedArticleCategories = catCodes.map(categorieCode => {
+          const foundedCat = this.categories.filter(refCategorie => {
+            return refCategorie.code === categorieCode
+          })
+          if (foundedCat) {
+            return foundedCat[0].id
+          }
+        })
+      }
+      // console.log('article sélectionné: ', this.selectedArticle.id, this.selectedArticle.titre)
+      console.log('article sélectionné: ', this.selectedArticle.categories, selectedArticleCategories)
       this.formArticle = {
         id: this.selectedArticle.id,
         titre: this.selectedArticle.titre,
@@ -483,14 +512,15 @@ export default {
         positif: this.selectedArticle.positif,
         negatif: this.selectedArticle.negatif,
         datePublication: this.selectedArticle.datePublication,
-        jeu: this.selectedArticle.jeu.id
+        jeu: this.selectedArticle.jeu.id,
+        categories: selectedArticleCategories
       }
       // this.editorContent = this.selectedArticle.contenu
       this.$refs.toastuiEditor.invoke('setHtml', this.selectedArticle.contenu)
-      console.log(this.selectedArticle.contenu)
+      // console.log(this.selectedArticle.contenu)
     },
     fetchData: function () {
-      console.log('fetchData: editeur, personnalites, roles, articles')
+      // console.log('fetchData: editeur, personnalites, roles, articles')
       syncService.getEditeurs().then(function (response) {
         this.editeurs = response
         this.formatSortEditeurs()
@@ -516,6 +546,9 @@ export default {
         this.articles = response
         this.formatSortArticles()
       }.bind(this))
+      const references = JSON.parse(localStorage.getItem('references'))
+      this.categories = references.categories
+      console.log('fetchData', this.categories)
     },
     formatSortArticles: function () {
       this.articles.map(function (article) {
@@ -572,8 +605,8 @@ export default {
       })
     },
     jeuSelected: function () {
-      console.log('Jeu sélectionné: ', this.formArticle.jeu)
-      console.log('Jeu sélectionné: ', this.formJeu.jeu)
+      // console.log('Jeu sélectionné: ', this.formArticle.jeu)
+      // console.log('Jeu sélectionné: ', this.formJeu.jeu)
       const idJeuSelected = this.formArticle.jeu || this.formJeu.jeu
       this.existingArticles = []
       if (this.articles) {
@@ -586,7 +619,7 @@ export default {
 
       let selectedJeu = {}
       this.jeux.map(function (game) {
-        console.log(game.id, idJeuSelected)
+        // console.log(game.id, idJeuSelected)
         if (game.id === idJeuSelected) {
           selectedJeu = game
         }
@@ -602,7 +635,7 @@ export default {
       this.formJeu.dureeMax = selectedJeu.dureeMax
       this.formJeu.dureePartie = selectedJeu.dureePartie
       this.formJeu.envie = selectedJeu.envie
-      console.log('TODO: charger les type de solo')
+      console.log('TODO: charger les types de solo')
       const selectedType = []
       if (selectedJeu.types) {
         selectedJeu.types.map(typ => {
@@ -624,7 +657,7 @@ export default {
       const selectedAuteurs = []
       if (selectedJeu.personnalites && selectedJeu.personnalites.auteurs) {
         selectedJeu.personnalites.auteurs.map(ed => {
-          console.log('aut:', ed)
+          // console.log('aut:', ed)
           if (ed.id) {
             selectedAuteurs.push(ed.id)
           }
@@ -641,12 +674,13 @@ export default {
       }
       this.formJeu.illustrateurs = selectedIllust
 
-      console.log(this.formJeu)
+      // console.log(this.formJeu)
     },
     validateArticle: function () {
       const html = this.$refs.toastuiEditor.invoke('getHtml')
-      console.log('html', html)
+      // console.log('html', html)
       html.replace('<pre>', '').replace('</pre>', '')
+      console.log('validateArticle', this.selectedCategories, this.formArticle.categories)
       //*
       const data = {
         id: this.formArticle.id,
@@ -655,10 +689,11 @@ export default {
         positif: this.formArticle.positif,
         negatif: this.formArticle.negatif,
         datePublication: moment(this.formArticle.datePublication).format('yyyy-MM-DD'),
-        image: this.formArticle.image,
-        contenu: html
+        contenu: html,
+        categories: this.formArticle.categories.join(',')
       }
-
+      // console.log('validateArticle', data)
+      //*
       syncService.postArticle(data).then(function (response) {
         this.articles = response
         this.formatSortArticles()
@@ -669,7 +704,8 @@ export default {
           positif: '',
           negatif: '',
           datePublication: null,
-          jeu: null
+          jeu: null,
+          categories: []
         }
         this.formJeu.image = null
         this.selectedArticleId = null
