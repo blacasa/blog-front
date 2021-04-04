@@ -10,7 +10,9 @@
       footer-class="bla-list-card-footer"
     >
       <b-card-text class="bla-card-content">
-        <img v-if="image !== null" v-bind:src="image" class="card-image"/>
+        <div class="card-image-div">
+          <img v-if="image !== null" v-bind:src="image" class="card-image"/>
+        </div>
         <p v-html="content" v-on:click="readArticle"></p>
         <p class="see-more">
         <b-link :to="{ name: 'Article', params: { id: article.codeUrl ? article.codeUrl : article.id, article: article} }">Lire la suite</b-link>
@@ -157,10 +159,13 @@ export default {
   }
 }
 .card-image {
+  width: 250px;
+  height: 178px;
+  object-fit: contain;
+}
+.card-image-div {
   float: left;
-  margin-right: 2%;
-  width: 20%;
-  max-width: 200px;
+  margin-right: 10px;
 }
 .footer-categories {
   padding-left: 7%;

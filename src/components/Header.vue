@@ -2,36 +2,46 @@
     <div>
       <b-navbar type="dark" variant="info">
         <b-navbar-brand to="/"><img src="/images/dragon.webp" alt="13" class="bla-brand-icon">13 jeux solo</b-navbar-brand>
-        <b-navbar-nav>
-          <!--<b-nav-item to="/">Accueil</b-nav-item>-->
-          <b-nav-item to="/articles">Articles</b-nav-item>
-          <!--<b-nav-item to="/categories">Catégories</b-nav-item>-->
-          <b-nav-item to="/jeux">Jeux</b-nav-item>
-          <b-nav-item to="/about">A propos</b-nav-item>
-          <b-nav-item to="/adm" v-if="adminMode">Adm</b-nav-item>
-          <b-nav-item to="/login" v-if="false">Connexion</b-nav-item>
-          <b-nav-text v-if="adminMode" v-on:click="logout">Déconnexion</b-nav-text>
-        </b-navbar-nav>
-        <!--
-        <b-navbar-nav class="ml-auto">
-          <b-nav-form>
-            <b-form-input v-model="searchGame" @keyup.enter="search()" size="sm" class="mr-sm-2" placeholder="Recherche"></b-form-input>
-            <b-button size="sm" class="my-2 my-sm-0 btn-search" v-on:click="clearSearch"><b-icon icon="x-circle" aria-hidden="true"></b-icon></b-button>
-            <b-button size="sm" class="my-2 my-sm-0 btn-search" v-on:click="search"><b-icon icon="search" aria-hidden="true"></b-icon></b-button>
-          </b-nav-form>
-        </b-navbar-nav>
-        -->
+        <div class="menu-div">
+          <b-navbar-nav>
+            <!--<b-nav-item to="/">Accueil</b-nav-item>-->
+            <b-nav-item to="/articles">Articles</b-nav-item>
+            <!--<b-nav-item to="/categories">Catégories</b-nav-item>-->
+            <b-nav-item to="/jeux">Jeux</b-nav-item>
+            <b-nav-item to="/about">A propos</b-nav-item>
+            <b-nav-item to="/adm" v-if="adminMode">Adm</b-nav-item>
+            <b-nav-item to="/login" v-if="false">Connexion</b-nav-item>
+            <b-nav-text v-if="adminMode" v-on:click="logout">Déconnexion</b-nav-text>
+          </b-navbar-nav>
+          <!--
+          <b-navbar-nav class="ml-auto">
+            <b-nav-form>
+              <b-form-input v-model="searchGame" @keyup.enter="search()" size="sm" class="mr-sm-2" placeholder="Recherche"></b-form-input>
+              <b-button size="sm" class="my-2 my-sm-0 btn-search" v-on:click="clearSearch"><b-icon icon="x-circle" aria-hidden="true"></b-icon></b-button>
+              <b-button size="sm" class="my-2 my-sm-0 btn-search" v-on:click="search"><b-icon icon="search" aria-hidden="true"></b-icon></b-button>
+            </b-nav-form>
+          </b-navbar-nav>
+          -->
+        </div>
+        <div class="burger-div">
+          <Slide right :closeOnNavigation="true">
+              <b-nav-item to="/articles">Articles</b-nav-item>
+              <b-nav-item to="/jeux">Jeux</b-nav-item>
+              <b-nav-item to="/about">A propos</b-nav-item>
+          </Slide>
+        </div>
       </b-navbar>
     </div>
 </template>
 
 <script>
 import router from '../router/index'
+import { Slide } from 'vue-burger-menu'
 
 export default {
   name: 'Header',
   components: {
-
+    Slide
   },
   data () {
     return {
@@ -77,6 +87,33 @@ export default {
   border: none;
 }
 .nav-item.nav-item.nav-item a {
+  color: rgb(240, 235, 235);
+}
+@media screen and (min-width: 600px) {
+  .burger-div {
+    display: none
+  }
+}
+@media screen and (max-width: 599px) {
+  .menu-div {
+    display: none
+  }
+}
+</style>
+<style>
+.bm-burger-button {
+  position: absolute;
+  width: 36px;
+  height: 30px;
+  left: 36px;
+  top: 18px;
+  cursor: pointer;
+}
+.bm-burger-bars {
+  background-color: rgb(240, 235, 235);
+}
+.bm-menu {
+  background-color: #6C028F;
   color: rgb(240, 235, 235);
 }
 </style>
