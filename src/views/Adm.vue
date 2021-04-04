@@ -556,6 +556,7 @@ export default {
         article.fullTitre = article.titre + ' (' + date + ')'
       })
       this.articles.sort(function (first, second) {
+        if (first.jeu === null || second.jeu === null) return 0
         if (first.jeu.nom > second.jeu.nom) return 1
         else if (first.jeu.nom < second.jeu.nom) return -1
         else return 0
@@ -611,7 +612,7 @@ export default {
       this.existingArticles = []
       if (this.articles) {
         this.articles.map(function (article) {
-          if (article.jeu.id === idJeuSelected) {
+          if (article.jeu !== null && article.jeu.id === idJeuSelected) {
             this.existingArticles.push(article)
           }
         }.bind(this))
