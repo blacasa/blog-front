@@ -32,7 +32,7 @@
                 </small>
               </span>
             </b-col>
-            <b-col cols="3">
+            <b-col cols="3" class="lang-div">
               <b-form-select
                 id="article-lang"
                 v-if="existingVoices.length > 0"
@@ -42,7 +42,7 @@
                 v-on:change="langChanged">
               </b-form-select>
             </b-col>
-            <b-col cols="3">
+            <b-col cols="3" class="lang-div">
               <b-button size="sm" class="my-2 my-sm-0 btn-read" v-on:click="readArticle">
                 <b-icon icon="play" aria-hidden="true"></b-icon>
               </b-button>
@@ -285,6 +285,9 @@ export default {
   }
   .capture-img {
     width: 300px;
+  }
+  .lang-div {
+    display: none
   }
 }
 .bla-detail-card-header > div {

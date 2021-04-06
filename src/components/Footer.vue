@@ -4,11 +4,11 @@
         <b-col cols="8" class="copyright">
           <span>©2020-2021</span>
         </b-col>
-        <b-col cols="2" class="follow">
-          <span><a href="https://twitter.com/13jeuxsolo?ref_src=twsrc%5Etfw" class="link">Me suivre</a></span>
+        <b-col cols="1" class="follow">
         </b-col>
-        <b-col cols="2" class="contact">
-          <span><a href="mailto:contact@13jeuxsolo.fr" class="link">Me contacter</a></span>
+        <b-col cols="3" class="contact">
+          <span><a href="https://twitter.com/13jeuxsolo?ref_src=twsrc%5Etfw" class="link"><b-icon icon="twitter" aria-hidden="true"></b-icon></a></span>
+          <span><a href="mailto:contact@13jeuxsolo.fr" class="link"><b-icon icon="envelope" aria-hidden="true"></b-icon></a></span>
         </b-col>
       </b-row>
     </div>
@@ -58,5 +58,7 @@ export default {
 }
 .link {
   color: rgb(240, 235, 235);
+  padding-left: 5px;
+  padding-right: 5px;
 }
 </style>

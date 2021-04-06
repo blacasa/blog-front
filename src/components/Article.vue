@@ -145,6 +145,10 @@ export default {
     border-top: none;
     color: #A406DB;
   }
+  .footer-categories a {
+    color: #A406DB;
+    text-decoration: underline;
+  }
 }
 @media screen and (max-width: 799px) {
   .bla-list-card-header {
@@ -156,6 +160,10 @@ export default {
     background-color: #5F8F00;
     border-top: none;
     color: rgb(240, 235, 235);
+  }
+  .footer-categories a {
+    color: rgb(240, 235, 235);
+    text-decoration: underline;
   }
 }
 .card-image {
@@ -184,5 +192,9 @@ export default {
 }
 .see-more {
   text-align: right;
+}
+.see-more a {
+  color: black;
+  text-decoration: underline;
 }
 </style>

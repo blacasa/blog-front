@@ -1,13 +1,19 @@
 <template>
   <div class="about">
-    <h1>Bienvenue sur le blog 13 jeux solo</h1>
+    <h1 class="titre">Bienvenue sur le blog 13 jeux solo</h1>
     <div class="preza">
       Le blog de 13obscur dédié aux jeux solo.
       <br/>
-      J'ai découvert les jeux de sociétés modernes aux alentours de 2010. J'ai des goûts assez ecclectiques tant en termes de mécaniques, thème ou encore nombre de joueur.
+      J'ai découvert les jeux de sociétés modernes aux alentours de 2010. J'ai des goûts assez éclectiques tant en termes de mécaniques, thèmes ou encore nombre de joueur.
     </div>
     <div class="but">
       Ce blog va me permettre de parler de jeux de plateau jouables en solitaire. Je présenterai essentiellement les jeux qui m'ont plu dans leur configuration solo.
+      <br/>
+      Les articles sont associés à des catégories.
+      <br/>
+      La catégorie principale est "Avis" qui correspond à des avis sur des jeux auxquels j'ai joué assez de parties pour me faire une idée (en général au moins 10 parties). L'article présente des photos d'une partie présentant la mise en place, un début de partie, et l'état du jeu en fin de partie.
+      <br/>
+      La catégorie "Express" va regrouper les articles sur des jeux pour lesquels je n'ai pas assez joué pour faire un retour approfondi, ou des jeux sur lesquels je veux faire un premier retour rapide avant un futur article plus détaillé, ou encore des extensions de jeux et pour lesquels il n'est pas utile de faire un article consitant surtout s'il y a déjà un article détaillé sur le jeu de base.
     </div>
     <div class="technique">
       Ce blog est développé par mes soins. Il a été développé avec Vue et Bootstrap pour le front, le backend utilise Node et une base de données MySql. Je peux ainsi faire des tests. C'est pour cela que sur les articles, vous trouverez en bas de page un bouton de lecture qui lira l'article.
@@ -33,19 +39,23 @@ export default {
   text-align: left;
 }
 
-.preza {
-  margin-top: 10px;
-}
-
 .but {
   margin-top: 10px;
 }
 
-.technique {
+.preza {
   margin-top: 10px;
 }
 
 .social {
+  margin-top: 10px;
+}
+
+.titre {
+  text-align: center;
+}
+
+.technique {
   margin-top: 10px;
 }
 </style>

@@ -56,7 +56,7 @@ export default {
     }).bind(this)
     this.fetchData()
     document.title = 'Jeux'
-    document.querySelector('meta[name="description"]').setAttribute('content', 'Liste des jeux solo ayant eu un article')
+    document.querySelector('meta[name="description"]').setAttribute('content', 'Liste des jeux solo')
   },
   data: function () {
     return {
@@ -67,10 +67,13 @@ export default {
           sortable: true,
           label: 'Titre'
         },
+        /*
         {
           key: 'annee',
           sortable: true
         },
+        // */
+        /*
         {
           key: 'jMin',
           sortable: true,
@@ -84,6 +87,8 @@ export default {
             }
           }
         },
+        // */
+        /*
         {
           key: 'dureeMin',
           sortable: true,
@@ -97,6 +102,7 @@ export default {
             }
           }
         },
+        // */
         /* {
           key: 'editeurs',
           sortable: true,

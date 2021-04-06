@@ -102,18 +102,18 @@ export default {
 </style>
 <style>
 .bm-burger-button {
-  position: absolute;
-  width: 36px;
-  height: 30px;
-  left: 36px;
-  top: 18px;
-  cursor: pointer;
+  position: absolute !important;
+  width: 36px !important;
+  height: 30px !important;
+  left: auto !important;
+  top: 18px !important;
+  cursor: pointer !important;
 }
 .bm-burger-bars {
-  background-color: rgb(240, 235, 235);
+  background-color: rgb(240, 235, 235) !important;
 }
 .bm-menu {
-  background-color: #6C028F;
-  color: rgb(240, 235, 235);
+  background-color: #6C028F !important;
+  color: rgb(240, 235, 235) !important;
 }
 </style>
