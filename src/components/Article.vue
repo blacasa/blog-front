@@ -11,7 +11,7 @@
     >
       <b-card-text class="bla-card-content">
         <div class="card-image-div">
-          <img v-if="image !== null" v-bind:src="image" class="card-image"/>
+          <img v-if="image !== null" v-lazy="image" class="card-image"/>
         </div>
         <p v-html="content" v-on:click="readArticle"></p>
         <p class="see-more">
@@ -79,7 +79,7 @@ export default {
       if (this.article.jeu !== null) {
         headerTitle += this.article.jeu.nom + ' - '
       }
-      headerTitle += this.article.titre
+      headerTitle += this.article.titre ? this.article.titre : ''
 
       return headerTitle
     },

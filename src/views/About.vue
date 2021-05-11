@@ -25,10 +25,13 @@
 </template>
 
 <script>
+
 export default {
   mounted: function () {
     document.title = 'A propos'
     document.querySelector('meta[name="description"]').setAttribute('content', 'Page "à propos" du site 13jeuxsolo.fr')
+  },
+  methods: {
   }
 }
 </script>

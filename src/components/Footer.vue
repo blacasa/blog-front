@@ -20,7 +20,6 @@ import router from '../router/index'
 export default {
   name: 'Footer',
   components: {
-
   },
   /* props: propriétés qui peuvent être envoyées par le parent */
   props: {

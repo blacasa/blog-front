@@ -38,7 +38,7 @@ export default {
       }.bind(this)).catch(() => {
         this.isLoading = false
         this.showNextPage = false
-        this.$bvToast.toast('Le serveur n\'a pu être contacté. Merci de ré-essayer ultérieurement.', {
+        this.$bvToast.toast('Le serveur n\'a pu être contacté. Merci de vérifier votre connexion et de ré-essayer ultérieurement.', {
           title: 'Erreur',
           autoHideDelay: 5000,
           solid: true,

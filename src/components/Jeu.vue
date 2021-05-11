@@ -3,7 +3,7 @@
     <b-container class="bv-example-row">
       <b-row>
         <b-col cols="3">
-          <img v-if="typeof jeu !== 'undefined' && jeu.image !== null" v-bind:src="couverture" class="header-card-image"/>
+          <img v-if="typeof jeu !== 'undefined' && jeu.image !== null" v-lazy="couverture" class="header-card-image"/>
         </b-col>
         <b-col cols="9">
           <ul v-if="jeu">
@@ -44,11 +44,17 @@ export default {
       return 'Créé par ' + authors.join(', ')
     },
     getDuree: function () {
+      let durationText = ''
       if (this.jeu.dureeMin === this.jeu.dureeMax) {
-        return this.jeu.dureeMin + ' minutes de jeu'
+        durationText += this.jeu.dureeMin + ' minutes de jeu'
       } else {
-        return 'De ' + this.jeu.dureeMin + ' à ' + this.jeu.dureeMax + ' minutes'
+        durationText += 'De ' + this.jeu.dureeMin + ' à ' + this.jeu.dureeMax + ' minutes'
       }
+      if (this.jeu.dureePartie) {
+        durationText += ' (environ ' + this.jeu.dureePartie + ' minutes en solo)'
+      }
+
+      return durationText
     },
     getEditeurs: function () {
       const editors = []

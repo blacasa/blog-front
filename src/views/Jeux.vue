@@ -47,6 +47,8 @@ import store from '../store'
 export default {
   name: 'Jeux',
   mounted: function () {
+    document.title = 'Jeux'
+    document.querySelector('meta[name="description"]').setAttribute('content', 'Liste des jeux solo')
     this.$store.subscribe((action) => {
       if (action.type === 'setGames') {
         // ici
@@ -55,8 +57,6 @@ export default {
       }
     }).bind(this)
     this.fetchData()
-    document.title = 'Jeux'
-    document.querySelector('meta[name="description"]').setAttribute('content', 'Liste des jeux solo')
   },
   data: function () {
     return {
@@ -165,7 +165,7 @@ export default {
         }.bind(this)).catch(error => {
           console.log('catch', error)
           this.isLoading = false
-          this.$bvToast.toast('Le serveur n\'a pu être contacté. Merci de ré-essayer ultérieurement.', {
+          this.$bvToast.toast('Le serveur n\'a pu être contacté. Merci de vérifier votre connexion et de ré-essayer ultérieurement.', {
             title: 'Erreur',
             autoHideDelay: 5000,
             solid: true,

@@ -4,6 +4,7 @@
       v-bind:adminMode="adminMode"
       v-on:update-menu="showAdmin"
       v-on:search="search"/>
+      <h1>13 jeux solo</h1>
     <div site="site-content">
       <router-view v-on:update-menu="showAdmin"/>
     </div>
@@ -81,7 +82,7 @@ export default {
 
 <style>
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: 'Cabin', Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
@@ -98,6 +99,9 @@ body {
   flex-direction: column;
   min-height: 100vh;
   background-color: rgb(240, 235, 235) !important;
+}
+h1 {
+  font-family: 'Lobster', cursive;
 }
 .site-content {
   flex: 1;

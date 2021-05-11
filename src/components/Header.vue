@@ -25,9 +25,9 @@
         </div>
         <div class="burger-div">
           <Slide right :closeOnNavigation="true">
-              <b-nav-item to="/articles">Articles</b-nav-item>
-              <b-nav-item to="/jeux">Jeux</b-nav-item>
-              <b-nav-item to="/about">A propos</b-nav-item>
+            <b-nav-item to="/articles">Articles</b-nav-item>
+            <b-nav-item to="/jeux">Jeux</b-nav-item>
+            <b-nav-item to="/about">A propos</b-nav-item>
           </Slide>
         </div>
       </b-navbar>

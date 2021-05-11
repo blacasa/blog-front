@@ -91,10 +91,11 @@ export default {
       syncService.getArticle(this.id).then(function (data) {
         this.setArticle(data)
         this.isLoading = false
-      }.bind(this)).catch(() => {
+      }.bind(this)).catch((e) => {
+        console.log(e)
         this.isLoading = false
         this.showNextPage = false
-        this.$bvToast.toast('Le serveur n\'a pu être contacté. Merci de ré-essayer ultérieurement.', {
+        this.$bvToast.toast('Le serveur n\'a pu être contacté. Merci de vérifier votre connexion et de ré-essayer ultérieurement.', {
           title: 'Erreur',
           autoHideDelay: 5000,
           solid: true,
@@ -129,11 +130,14 @@ export default {
        * [/capture]
        * [/img]
        */
-      const updatedContent = this.article.contenu ? this.article.contenu
-        .replaceAll('[img]', '<div class="centered-img">')
-        .replaceAll('[capture]', '<img src="' + constants.imagesURL + 'articles/')
-        .replaceAll('[/capture]', '" class="capture-img" />')
-        .replaceAll('[/img]', '</div>') : this.article.contenu
+      let updatedContent = ''
+      if (this.article.contenu) {
+        updatedContent = this.article.contenu
+          .replaceAll('[img]', '<div class="centered-img">')
+          .replaceAll('[capture]', '<img src="' + constants.imagesURL + 'articles/')
+          .replaceAll('[/capture]', '" class="capture-img" />')
+          .replaceAll('[/img]', '</div>')
+      }
       return updatedContent
     }
   },
@@ -154,7 +158,11 @@ export default {
       return this.article.datePublication ? 'Publié le ' + moment(this.article.datePublication).format('DD/MM/yyyy') : ''
     },
     getTitle: function () {
-      return (this.article.jeu ? this.article.jeu.nom + ' - ' : '') + this.article.titre
+      let title = ''
+      if (this.article && this.article.titre) {
+        title = (this.article.jeu ? this.article.jeu.nom + ' - ' : '') + this.article.titre
+      }
+      return title
     },
     langChanged: function () {
       this.selectedLang = this.voices[this.selectedVoice]
@@ -285,6 +293,10 @@ export default {
   }
   .capture-img {
     width: 300px;
+  }
+  .cat-link {
+    color: #2a3f01;
+    padding-top: 0;
   }
   .lang-div {
     display: none

@@ -71,7 +71,6 @@
               id="perso-input-2"
               v-model="formPerso.prenom"
               type="text"
-              required
               placeholder="Prenom"
             >
             </b-form-input>

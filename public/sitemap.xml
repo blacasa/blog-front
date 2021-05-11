@@ -78,4 +78,22 @@
     <changefreq>never</changefreq>
     <priority>0.5</priority>
   </url>
+  <url>
+    <loc>https://www.13jeuxsolo.fr/article/orchard-faire-pousser-des-pommes-sans-tomber-dedans</loc>
+    <lastmod>2020-04-13</lastmod>
+    <changefreq>never</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://www.13jeuxsolo.fr/article/button-shy-games-gamme-simply-solo</loc>
+    <lastmod>2020-05-02</lastmod>
+    <changefreq>never</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://www.13jeuxsolo.fr/article/the-road-sur-la-route</loc>
+    <lastmod>2020-05-10</lastmod>
+    <changefreq>never</changefreq>
+    <priority>0.5</priority>
+  </url>
 </urlset>
