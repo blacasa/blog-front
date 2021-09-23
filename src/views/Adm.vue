@@ -676,7 +676,8 @@ export default {
 
       // console.log(this.formJeu)
     },
-    validateArticle: function () {
+    validateArticle: function (event) {
+      event.preventDefault()
       const html = this.$refs.toastuiEditor.invoke('getHtml')
       // console.log('html', html)
       html.replace('<pre>', '').replace('</pre>', '')
@@ -714,7 +715,8 @@ export default {
       })
       // */
     },
-    validateEditeur: function () {
+    validateEditeur: function (event) {
+      event.preventDefault()
       const data = {
         code: this.formEditeur.code,
         libelle: this.formEditeur.libelle
@@ -730,7 +732,8 @@ export default {
         console.log('catch', e)
       })
     },
-    validatePersonnalite: function () {
+    validatePersonnalite: function (event) {
+      event.preventDefault()
       const data = {
         nom: this.formPerso.nom,
         prenom: this.formPerso.prenom
@@ -747,7 +750,8 @@ export default {
         console.log('catch', e)
       })
     },
-    validateJeu: function () {
+    validateJeu: function (event) {
+      event.preventDefault()
       const data = {
         id: this.formJeu.id,
         image: this.formJeu.image,

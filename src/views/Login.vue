@@ -49,7 +49,8 @@ export default {
     }
   },
   methods: {
-    validateLogin: function () {
+    validateLogin: function (event) {
+      event.preventDefault()
       const data = {
         login: this.formLogin.login,
         password: this.formLogin.pwd

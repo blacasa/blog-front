@@ -56,11 +56,11 @@ self.addEventListener("fetch", event => {
   // console.log("Service Worker: fetch!");
   // console.log(event.request, self.location.origin);
   // Skip cross-origin requests, like those for Google Analytics.
-  if (event.request.url.startsWith(self.location.origin)) {
+  //if (event.request.url.startsWith(self.location.origin)) {
     event.respondWith(
       caches.match(event.request).then(cachedResponse => {
         if (cachedResponse) {
-          return cachedResponse;
+          // return cachedResponse;
         }
 
         return caches.open(RUNTIME).then(cache => {
@@ -73,6 +73,6 @@ self.addEventListener("fetch", event => {
         });
       })
     );
-  }
+  //}
 });
 // */

@@ -31,7 +31,7 @@
             </span>
           </b-col>
           <b-col cols="6" class="published-date">
-            <small>{{ publishedDate() }}</small>
+            <small>{{ publishedDate() }}&nbsp;</small><b-icon icon="eye" aria-hidden="true"></b-icon>{{article.nbVues ? article.nbVues : ''}}
           </b-col>
         </b-row>
       </template>
