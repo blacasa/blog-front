@@ -7,6 +7,7 @@
         <b-col cols="1" class="follow">
         </b-col>
         <b-col cols="3" class="contact">
+          <span><a href="https://www.13jeuxsolo.fr/rss.xml" class="link"><b-icon icon="rss-fill" aria-hidden="true"></b-icon></a></span>
           <span><a href="https://twitter.com/13jeuxsolo?ref_src=twsrc%5Etfw" class="link"><b-icon icon="twitter" aria-hidden="true"></b-icon></a></span>
           <span><a href="mailto:contact@13jeuxsolo.fr" class="link"><b-icon icon="envelope" aria-hidden="true"></b-icon></a></span>
         </b-col>

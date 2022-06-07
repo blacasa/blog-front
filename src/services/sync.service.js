@@ -7,6 +7,7 @@ const backURL = 'http://localhost:3000/api'
 // const locationURL = 'http://ip-api.com/json'
 const articleURL = backURL + '/articles'
 const allArticleURL = articleURL + '/all'
+const contactURL = backURL + '/contact'
 const editeurURL = backURL + '/editeurs'
 const loginURL = backURL + '/auth-tokens'
 const jeuURL = backURL + '/jeux'
@@ -14,6 +15,7 @@ const personnaliteURL = backURL + '/personnalites'
 const referencesURL = backURL + '/references'
 const roleURL = backURL + '/roles'
 const typeURL = backURL + '/types'
+const visitURL = backURL + '/visit'
 
 axios.interceptors.request.use(function (config) {
   console.log('interceptor')
@@ -25,9 +27,11 @@ axios.interceptors.request.use(function (config) {
   console.log('interceptor', config)
   const stats = localStorage.getItem('stats')
   console.log('interceptor', stats)
+  /*
   if (stats && config.url !== locationURL) {
     config.headers.common.stats = stats
   }
+  // */
 
   return config
 }, function (error) {
@@ -46,11 +50,21 @@ axios.interceptors.response.use(function (response) {
 })
 
 export default {
+  addVisit (type) {
+    return axios
+      .get(visitURL, {
+        params: {
+          type: type
+        }
+      })
+  },
+  /*
   getLocalisation () {
     return axios
       .get(locationURL)
       .then(response => response.data)
   },
+  // */
   getAllArticles () {
     return axios
       .get(allArticleURL)
@@ -116,6 +130,21 @@ export default {
       return response.data
     }).catch(e => {
       console.log('catch error', e)
+      return Promise.reject(e)
+    })
+  },
+  postContact (data) {
+    const params = new URLSearchParams()
+    params.append('data', JSON.stringify(data))
+
+    return axios.post(
+      contactURL,
+      params,
+      { timeout: 5000 }
+    ).then(response => {
+      return response.data
+    }).catch(e => {
+      console.log(e)
       return Promise.reject(e)
     })
   },

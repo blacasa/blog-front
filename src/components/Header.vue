@@ -8,6 +8,9 @@
             <b-nav-item to="/articles">Articles</b-nav-item>
             <!--<b-nav-item to="/categories">Catégories</b-nav-item>-->
             <b-nav-item to="/jeux">Jeux</b-nav-item>
+            <b-nav-item to="/ressources">Ressources</b-nav-item>
+            <b-nav-item to="/scorepad">Scorepad</b-nav-item>
+            <b-nav-item to="/contact">Contact</b-nav-item>
             <b-nav-item to="/about">A propos</b-nav-item>
             <b-nav-item to="/adm" v-if="adminMode">Adm</b-nav-item>
             <b-nav-item to="/login" v-if="false">Connexion</b-nav-item>
@@ -27,6 +30,9 @@
           <Slide right :closeOnNavigation="true">
             <b-nav-item to="/articles">Articles</b-nav-item>
             <b-nav-item to="/jeux">Jeux</b-nav-item>
+            <b-nav-item to="/ressources">Ressources</b-nav-item>
+            <b-nav-item to="/scorepad">Scorepad</b-nav-item>
+            <b-nav-item to="/contact">Contact</b-nav-item>
             <b-nav-item to="/about">A propos</b-nav-item>
           </Slide>
         </div>
